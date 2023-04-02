@@ -40,7 +40,7 @@ fun HomeScreen() {
                         Box(modifier = Modifier.padding(bottom = 100.dp)) {
                             when (selectedIndex.value) {
                                 0 -> {
-                                    // TODO show digital twins
+                                    DigitalTwinsScreen()
                                 }
                                 1 -> {
                                     // TODO show accepted twins
