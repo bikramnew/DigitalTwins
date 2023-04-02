@@ -9,11 +9,14 @@ import androidx.compose.material.Card
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.bikram.digitaltwins.helpers.DataStoreManager
 import com.bikram.digitaltwins.ui.components.CustomAppBar
 import com.bikram.digitaltwins.ui.components.CustomBottomBar
 import com.bikram.digitaltwins.ui.theme.colorPrimary
@@ -24,6 +27,10 @@ import com.bikram.digitaltwins.ui.theme.ghost_white
 @Composable
 fun HomeScreen() {
     val selectedIndex = remember { mutableStateOf(0) }
+
+    val dataStoreManager = DataStoreManager(LocalContext.current)
+    val acceptedTwins = dataStoreManager.getAcceptedFromDataStore().collectAsState(initial = "")
+    val rejectedTwins = dataStoreManager.getRejectedFromDataStore().collectAsState(initial = "")
 
     Surface(modifier = Modifier.fillMaxSize()) {
         Scaffold(
@@ -40,10 +47,20 @@ fun HomeScreen() {
                         Box(modifier = Modifier.padding(bottom = 100.dp)) {
                             when (selectedIndex.value) {
                                 0 -> {
-                                    DigitalTwinsScreen()
+                                    DigitalTwinsScreen(
+                                        acceptedTwins.value,
+                                        rejectedTwins.value
+                                    )
                                 }
                                 1 -> {
-                                    // TODO show accepted twins
+                                    //make item non swipeable and only
+                                    //show accepted twins in this tab
+                                    DigitalTwinsScreen(
+                                        acceptedTwins.value,
+                                        rejectedTwins.value,
+                                        false,
+                                        true
+                                    )
                                 }
                             }
                         }
