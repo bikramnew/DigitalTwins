@@ -5,9 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +21,9 @@ import com.bikram.digitaltwins.ui.components.CustomAppBar
 import com.bikram.digitaltwins.ui.components.CustomBottomBar
 import com.bikram.digitaltwins.ui.theme.colorPrimary
 import com.bikram.digitaltwins.ui.theme.ghost_white
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Preview(showBackground = true)
@@ -70,6 +73,19 @@ fun HomeScreen() {
             bottomBar = {
                 CustomBottomBar(selectedIndex = selectedIndex)
             },
+            floatingActionButton = {
+                FloatingActionButton(onClick = {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        dataStoreManager.clearDataStore()
+                    }
+                }) {
+                    Icon(
+                        imageVector = Icons.Filled.Replay,
+                        contentDescription = "Restore",
+                        tint = colorPrimary
+                    )
+                }
+            }
         )
     }
 }

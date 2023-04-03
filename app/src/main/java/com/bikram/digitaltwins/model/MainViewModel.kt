@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bikram.digitaltwins.helpers.DataStoreManager
 
-class MainViewModel(val dataStoreManager: DataStoreManager) : ViewModel() {
+class MainViewModel(val dataStoreManager: DataStoreManager? = null) : ViewModel() {
     var digitalTwinsState: SnapshotStateList<DigitalTwin> = mutableStateListOf(DigitalTwin())
 
     init {
@@ -17,11 +17,11 @@ class MainViewModel(val dataStoreManager: DataStoreManager) : ViewModel() {
     }
 
     suspend fun saveAcceptedToDataStore(twinId: String?) {
-        dataStoreManager.saveAcceptedToDataStore(twinId!!)
+        dataStoreManager?.saveAcceptedToDataStore(twinId!!)
     }
 
     suspend fun saveRejectedToDataStore(twinId: String?) {
-        dataStoreManager.saveRejectedToDataStore(twinId!!)
+        dataStoreManager?.saveRejectedToDataStore(twinId!!)
     }
 }
 
